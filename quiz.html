@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzes - Acadify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li onclick="navigateTo('index.html')">Dashboard</li>
+                <li onclick="navigateTo('my-courses.html')">My Courses</li>
+                <li onclick="navigateTo('browse-courses.html')">Browse Courses</li>
+                <li onclick="navigateTo('lesson.html')">Lessons</li>
+                <li class="active" onclick="navigateTo('quiz.html')">Quizzes</li>
+                <li onclick="navigateTo('assignment.html')">Assignments</li>
+                <li onclick="navigateTo('progress.html')">Progress</li>
+                <li onclick="navigateTo('calendar.html')">Calendar</li>
+                <li onclick="navigateTo('setting.html')">Settings</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search quizzes...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar">JD</div>
+                        <span>Johen Davis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+                <div class="welcome">
+                    <h2>Quiz: ES6 Features 📝</h2>
+                    <p>React Advanced Module 2 • 10 questions</p>
+                </div>
+
+                <!-- QUIZ HEADER -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <div>
+                        <span style="color: var(--text-secondary); font-weight: 600;">Question 3 of 10</span>
+                    </div>
+                    <div class="quiz-timer">
+                        ⏱️ Time Remaining: <strong>15:42</strong>
+                    </div>
+                </div>
+
+                <!-- PROGRESS BAR -->
+                <div style="margin-bottom: 24px;">
+                    <div class="progress-bar" style="height: 8px;">
+                        <div class="progress-fill" style="width: 30%; background: var(--primary-color);"></div>
+                    </div>
+                </div>
+
+                <!-- QUIZ QUESTION -->
+                <div class="quiz-question">
+                    <h3>What is the primary purpose of arrow functions in ES6?</h3>
+                    
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="answer" value="a">
+                            <span>To provide a shorter syntax for writing functions</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="answer" value="b">
+                            <span>To replace all regular functions</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="answer" value="c">
+                            <span>To provide a shorter syntax and bind 'this' lexically</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="answer" value="d">
+                            <span>To create an arrow shape in code</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- QUIZ ACTIONS -->
+                <div style="display: flex; gap: 12px; margin-bottom: 32px;">
+                    <button class="btn btn-secondary">← Previous Question</button>
+                    <button class="btn btn-primary">Next Question →</button>
+                    <button class="btn btn-secondary" style="margin-left: auto;">Submit Quiz</button>
+                </div>
+
+                <!-- QUIZ RESULTS (Hidden until submitted) -->
+                <div id="quizResults" style="display: none; animation: fadeIn 0.3s ease;">
+                    <div style="background: #f0fdf4; border: 1px solid var(--success); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+                        <h3 style="color: var(--success); margin-top: 0; margin-bottom: 8px;">Quiz Completed! ✓</h3>
+                        <p style="color: var(--text-secondary); margin: 0;">You scored <strong>8 out of 10 (80%)</strong></p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Question Review</h4>
+                        <div style="margin-top: 16px;">
+                            <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; margin-bottom: 12px;">
+                                <div style="font-weight: 600; margin-bottom: 8px;">Question 1: What does CSS stand for?</div>
+                                <div style="color: var(--success); font-size: 13px;">✓ Correct - You answered: Cascading Style Sheets</div>
+                            </div>
+                            <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; margin-bottom: 12px;">
+                                <div style="font-weight: 600; margin-bottom: 8px;">Question 2: Which is not a JavaScript data type?</div>
+                                <div style="color: var(--danger); font-size: 13px;">✗ Incorrect - You answered: HTML (Correct: Float)</div>
+                            </div>
+                            <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px;">
+                                <div style="font-weight: 600; margin-bottom: 8px;">Question 3: What is the primary purpose of arrow functions?</div>
+                                <div style="color: var(--success); font-size: 13px;">✓ Correct - You answered: To provide shorter syntax and bind 'this' lexically</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; margin-top: 24px;">
+                        <button class="btn btn-primary">Review Quiz</button>
+                        <button class="btn btn-secondary">Next Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Toggle quiz results display
+        document.querySelectorAll('.btn').forEach(btn => {
+            if (btn.textContent.includes('Submit')) {
+                btn.addEventListener('click', () => {
+                    const questionsDiv = document.querySelector('.quiz-question');
+                    const resultDiv = document.getElementById('quizResults');
+                    if (questionsDiv) questionsDiv.style.display = 'none';
+                    if (resultDiv) resultDiv.style.display = 'block';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Settings</title>
+
+<style>
+.profile-header{
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+background:#e5e4e4;
+color:rgb(0, 0, 0);
+
+padding:25px;
+border-radius:14px;
+
+margin-bottom:30px;
+
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+.avatar{
+width:80px;
+height:80px;
+border-radius:50%;
+border:3px solid #44058b;
+object-fit:cover;
+}
+
+.profile-info{
+flex:1;
+margin-left:20px;
+}
+
+.profile-info h2{
+margin-bottom:5px;
+margin-top: 100px;
+}
+
+.profile-info p{
+color:#4a4848;
+font-size:14px;
+}
+
+.email{
+font-size:13px;
+color:#b4b4b4;
+}
+
+.edit-btn{
+background:#44058b;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:8px;
+cursor:pointer;
+font-weight:500;
+}
+
+.edit-btn:hover{
+background:#44058b;
+}  
+
+header{
+background:#44058b;
+color:white;
+padding:15px;
+text-align:center;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:30px;
+}
+
+.settings-card{
+background:white;
+padding:25px;
+margin-bottom:20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.settings-card h3{
+margin-top:0;
+}
+
+.input-group{
+margin-bottom:15px;
+}
+
+.input-group label{
+display:block;
+margin-bottom:5px;
+font-weight:bold;
+}
+
+.input-group input,
+.input-group select{
+width:100%;
+padding:8px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+.switch{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+}
+
+button{
+background:#44058b;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#551d7d;
+}
+
+.dark-mode{
+background:#1f1f1f;
+color:white;
+}
+
+.dark-mode .settings-card{
+background:#2c2c2c;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Account Settings</h2>
+</header>
+<div class="profile-header">
+
+    <img src="https://i.pravatar.cc/150?img=12" class="avatar">
+
+    <div class="profile-info">
+        <h2>Rahul Sharma</h2>
+        <p>Student • Web Development</p>
+        <span class="email">rahul@example.com</span>
+    </div>
+
+    <button class="edit-btn">Edit Profile</button>
+
+</div>
+
+<div class="container">
+
+<!-- Profile Settings -->
+
+<div class="settings-card">
+
+<h3>Profile Information</h3>
+
+<div class="input-group">
+<label>Full Name</label>
+<input type="text" placeholder="Enter name">
+</div>
+
+<div class="input-group">
+<label>Email</label>
+<input type="email" placeholder="Enter email">
+</div>
+
+<div class="input-group">
+<label>Course Interest</label>
+<select>
+<option>Web Development</option>
+<option>Data Science</option>
+<option>Cyber Security</option>
+<option>Machine Learning</option>
+</select>
+</div>
+
+<button onclick="saveSettings()">Save Profile</button>
+
+</div>
+
+<!-- Change Password -->
+
+<div class="settings-card">
+
+<h3>Change Password</h3>
+
+<div class="input-group">
+<label>Current Password</label>
+<input type="password">
+</div>
+
+<div class="input-group">
+<label>New Password</label>
+<input type="password">
+</div>
+
+<div class="input-group">
+<label>Confirm Password</label>
+<input type="password">
+</div>
+
+<button onclick="changePassword()">Update Password</button>
+
+</div>
+
+<!-- Notifications -->
+
+<div class="settings-card">
+
+<h3>Notification Settings</h3>
+
+<div class="switch">
+<input type="checkbox" checked>
+<label>Email Notifications</label>
+</div>
+
+<div class="switch">
+<input type="checkbox" checked>
+<label>Assignment Reminders</label>
+</div>
+
+<div class="switch">
+<input type="checkbox">
+<label>Course Updates</label>
+</div>
+
+</div>
+
+<!-- Appearance -->
+
+<div class="settings-card">
+
+<h3>Appearance</h3>
+
+<div class="switch">
+<input type="checkbox" onclick="toggleTheme()">
+<label>Dark Mode</label>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function saveSettings(){
+alert("Profile settings saved!");
+}
+
+function changePassword(){
+alert("Password updated successfully!");
+}
+
+function toggleTheme(){
+document.body.classList.toggle("dark-mode");
+}
+
+</script>
+
+</body>
+</html>
+
+

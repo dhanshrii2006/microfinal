@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress - Acadify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li onclick="navigateTo('index.html')">Dashboard</li>
+                <li onclick="navigateTo('my-courses.html')">My Courses</li>
+                <li onclick="navigateTo('browse-courses.html')">Browse Courses</li>
+                <li onclick="navigateTo('lesson.html')">Lessons</li>
+                <li onclick="navigateTo('quiz.html')">Quizzes</li>
+                <li onclick="navigateTo('assignment.html')">Assignments</li>
+                <li class="active" onclick="navigateTo('progress.html')">Progress</li>
+                <li onclick="navigateTo('calendar.html')">Calendar</li>
+                <li onclick="navigateTo('setting.html')">Settings</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search analytics...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar">JD</div>
+                        <span>Johen Davis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+                <div class="welcome">
+                    <h2>Learning Analytics 📊</h2>
+                    <p>Track your progress and see your growth</p>
+                </div>
+
+                <!-- STATS CARDS -->
+                <div class="cards-grid">
+                    <div class="stat-card">
+                        <h4>Courses Completed</h4>
+                        <div class="stat-number">12</div>
+                        <div class="card-footer">↑ 2 this month</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Total Learning Hours</h4>
+                        <div class="stat-number">256</div>
+                        <div class="card-footer">↑ 32 this month</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Average Quiz Score</h4>
+                        <div class="stat-number">87%</div>
+                        <div class="card-footer">↑ 3% this month</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Current Streak</h4>
+                        <div class="stat-number">15</div>
+                        <div class="card-footer">Days learning</div>
+                    </div>
+                </div>
+
+                <!-- CHARTS -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h4>Weekly Learning Hours</h4>
+                        <canvas id="progressChart" height="200"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4>Course Completion Progress</h4>
+                        <canvas id="courseProgressChart" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- COURSE PROGRESS DETAILS -->
+                <h3 class="section-title">Course Progress Details</h3>
+                <div class="card">
+                    <div style="display: grid; gap: 20px;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <strong style="color: var(--text-primary);">React Advanced</strong>
+                                <span style="color: var(--text-secondary); font-size: 13px;">65/100 points</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%; background: var(--primary-color);"></div>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">65% Complete • 4 assignments pending</div>
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <strong style="color: var(--text-primary);">Python Basics</strong>
+                                <span style="color: var(--text-secondary); font-size: 13px;">100/100 points</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%; background: var(--success);"></div>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">100% Complete • Certificate earned ✓</div>
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <strong style="color: var(--text-primary);">Web Design Fundamentals</strong>
+                                <span style="color: var(--text-secondary); font-size: 13px;">42/100 points</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 42%; background: var(--warning);"></div>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">42% Complete • 2 quizzes pending</div>
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <strong style="color: var(--text-primary);">Node.js API Development</strong>
+                                <span style="color: var(--text-secondary); font-size: 13px;">28/100 points</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 28%; background: var(--primary-color);"></div>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">28% Complete • Just started</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACHIEVEMENTS -->
+                <h3 class="section-title">Achievements Unlocked</h3>
+                <div class="three-column">
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 12px;">🏆</div>
+                        <h4 style="margin: 0 0 4px 0;">Speed Learner</h4>
+                        <p style="margin: 0; font-size: 12px; color: var(--text-secondary);">Completed 5 courses in 1 month</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 12px;">📚</div>
+                        <h4 style="margin: 0 0 4px 0;">Knowledge Seeker</h4>
+                        <p style="margin: 0; font-size: 12px; color: var(--text-secondary);">Explored 10 different subjects</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 12px;">⭐</div>
+                        <h4 style="margin: 0 0 4px 0;">Perfect Score</h4>
+                        <p style="margin: 0; font-size: 12px; color: var(--text-secondary);">Scored 100% on a quiz</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 12px;">🔥</div>
+                        <h4 style="margin: 0 0 4px 0;">On Fire</h4>
+                        <p style="margin: 0; font-size: 12px; color: var(--text-secondary);">15-day learning streak</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 12px;">🎯</div>
+                        <h4 style="margin: 0 0 4px 0;">Project Master</h4>
+                        <p style="margin: 0; font-size: 12px; color: var(--text-secondary);">Completed 8 real-world projects</p>
+                    </div>
+                    <div class="card" style="text-align: center; opacity: 0.5;">
+                        <div style="font-size: 48px; margin-bottom: 12px;">👑</div>
+                        <h4 style="margin: 0 0 4px 0;">Master Developer</h4>
+                        <p style="margin: 0; font-size: 12px; color: var(--text-secondary);">Locked - Complete 20 courses</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="progress.js"></script>
+</body>
+</html>

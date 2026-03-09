@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments - Acadify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li onclick="navigateTo('index.html')">Dashboard</li>
+                <li onclick="navigateTo('my-courses.html')">My Courses</li>
+                <li onclick="navigateTo('browse-courses.html')">Browse Courses</li>
+                <li onclick="navigateTo('lesson.html')">Lessons</li>
+                <li onclick="navigateTo('quiz.html')">Quizzes</li>
+                <li class="active" onclick="navigateTo('assignment.html')">Assignments</li>
+                <li onclick="navigateTo('progress.html')">Progress</li>
+                <li onclick="navigateTo('calendar.html')">Calendar</li>
+                <li onclick="navigateTo('setting.html')">Settings</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search assignments...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar">JD</div>
+                        <span>Johen Davis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+                <div class="welcome">
+                    <h2>Assignments ✍️</h2>
+                    <p>Build practical skills with hands-on projects</p>
+                </div>
+
+                <!-- FILTER & SORT -->
+                <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                    <button class="btn btn-primary">All Assignments</button>
+                    <button class="btn btn-secondary">Pending</button>
+                    <button class="btn btn-secondary">Submitted</button>
+                    <button class="btn btn-secondary">Graded</button>
+                </div>
+
+                <!-- ASSIGNMENTS LIST -->
+                <div style="display: grid; gap: 20px;">
+                    <!-- ASSIGNMENT CARD 1 -->
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                            <div>
+                                <h3 style="margin: 0 0 8px 0; color: var(--text-primary);">Build a Todo App with Hooks</h3>
+                                <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">React Advanced • Module 2</p>
+                            </div>
+                            <span class="badge badge-warning">Due in 3 days</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
+                            Create a fully functional todo application using React Hooks. The app should include features like adding, deleting, and marking tasks as complete. Use Context API for state management.
+                        </p>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="btn btn-primary btn-small">Start Assignment</button>
+                            <button class="btn btn-secondary btn-small">View Instructions</button>
+                        </div>
+                    </div>
+
+                    <!-- ASSIGNMENT CARD 2 -->
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                            <div>
+                                <h3 style="margin: 0 0 8px 0; color: var(--text-primary);">API Development Project</h3>
+                                <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Node.js API Development • Module 4</p>
+                            </div>
+                            <span class="badge badge-success">Submitted ✓</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
+                            Build a REST API for a blog platform with user authentication, JWT tokens, and CRUD operations for posts and comments.
+                        </p>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="btn btn-secondary btn-small">View Submission</button>
+                            <button class="btn btn-secondary btn-small">View Feedback</button>
+                        </div>
+                    </div>
+
+                    <!-- ASSIGNMENT CARD 3 -->
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                            <div>
+                                <h3 style="margin: 0 0 8px 0; color: var(--text-primary);">Design System Creation</h3>
+                                <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Web Design Fundamentals • Module 5</p>
+                            </div>
+                            <span class="badge badge-danger">Graded: 92/100</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
+                            Create a comprehensive design system with components, typography, color palette, and documentation using Figma.
+                        </p>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="btn btn-secondary btn-small">View Submission</button>
+                            <button class="btn btn-secondary btn-small">Download Feedback</button>
+                        </div>
+                    </div>
+
+                    <!-- ASSIGNMENT FORM -->
+                    <div id="assignmentForm" style="display: none;">
+                        <h3 style="margin-top: 0; color: var(--text-primary); margin-bottom: 24px;">Submit Assignment: Build a Todo App</h3>
+                        
+                        <div class="form-group">
+                            <label>Assignment Title</label>
+                            <input type="text" value="Todo App with Hooks" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Your Solution</label>
+                            <textarea placeholder="Explain your approach, list features implemented, and share any challenges you faced..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>GitHub Repository Link</label>
+                            <input type="url" placeholder="https://github.com/username/todo-app">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Live Demo URL</label>
+                            <input type="url" placeholder="https://your-todo-app.vercel.app">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload Files</label>
+                            <input type="file" multiple>
+                        </div>
+
+                        <div style="display: flex; gap: 12px;">
+                            <button class="btn btn-primary">Submit Assignment</button>
+                            <button class="btn btn-secondary" onclick="document.getElementById('assignmentForm').style.display='none'">Cancel</button>
+                        </div>
+                    </div>
+
+                    <!-- CONFIRMATION MESSAGE -->
+                    <div id="submissionConfirm" style="display: none; background: #f0fdf4; border: 1px solid var(--success); border-radius: 12px; padding: 24px; text-align: center;">
+                        <h3 style="color: var(--success); margin-top: 0;">✓ Assignment Submitted Successfully!</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;">Your assignment has been received. The instructor will review and grade it within 3-5 business days.</p>
+                        <button class="btn btn-primary" onclick="navigateTo('assignment.html')">Back to Assignments</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Toggle assignment form and confirmation
+        document.querySelectorAll('.btn').forEach(btn => {
+            if (btn.textContent.includes('Start Assignment')) {
+                btn.addEventListener('click', () => {
+                    document.getElementById('assignmentForm').style.display = 'block';
+                    window.scrollTo(0, document.body.scrollHeight);
+                });
+            }
+            if (btn.textContent.includes('Submit Assignment')) {
+                btn.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('btn-primary')) {
+                        document.getElementById('assignmentForm').style.display = 'none';
+                        document.getElementById('submissionConfirm').style.display = 'block';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

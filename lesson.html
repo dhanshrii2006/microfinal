@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lessons - Acadify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .lesson-player-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .video-section {
+            min-width: 0;
+        }
+
+        .sidebar-lessons {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .sidebar-lessons h4 {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
+            background: var(--bg-secondary);
+        }
+
+        .lesson-list-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .lesson-list-item:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .lesson-list-item.active {
+            background-color: #eff6ff;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .lesson-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .lesson-list-item.active .lesson-number {
+            background: var(--success);
+        }
+
+        .lesson-title-text {
+            font-size: 13px;
+            flex: 1;
+        }
+
+        .lesson-duration-text {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1024px) {
+            .lesson-player-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-lessons {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li onclick="navigateTo('index.html')">Dashboard</li>
+                <li onclick="navigateTo('my-courses.html')">My Courses</li>
+                <li onclick="navigateTo('browse-courses.html')">Browse Courses</li>
+                <li class="active" onclick="navigateTo('lesson.html')">Lessons</li>
+                <li onclick="navigateTo('quiz.html')">Quizzes</li>
+                <li onclick="navigateTo('assignment.html')">Assignments</li>
+                <li onclick="navigateTo('progress.html')">Progress</li>
+                <li onclick="navigateTo('calendar.html')">Calendar</li>
+                <li onclick="navigateTo('setting.html')">Settings</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search lessons...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar">JD</div>
+                        <span>Johen Davis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+                <div style="margin-bottom: 24px;">
+                    <h3 class="section-title" style="margin-top: 0;">React Advanced: Hooks Deep Dive</h3>
+                    <p style="color: var(--text-secondary); margin-top: -16px;">Course: React Advanced • Module 3 of 8</p>
+                </div>
+
+                <!-- VIDEO PLAYER & SIDEBAR LAYOUT -->
+                <div class="lesson-player-layout">
+                    <!-- VIDEO PLAYER -->
+                    <div class="video-section">
+                        <div class="video-container">
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/MDRHFqDqAAw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <!-- LESSON DETAILS -->
+                        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-top: 24px; box-shadow: var(--shadow-sm);">
+                            <h3 style="margin-top: 0; color: var(--text-primary); margin-bottom: 12px;">Lesson 5: Using Custom Hooks</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 20px;">Learn how to create and use custom hooks to encapsulate component logic. This lesson covers best practices and real-world examples.</p>
+
+                            <div style="background: var(--bg-secondary); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+                                <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">Progress in lesson</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 40%; background: var(--success);"></div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 12px;">
+                                <button class="btn btn-primary">Mark as Complete</button>
+                                <button class="btn btn-secondary">Download Resources</button>
+                                <button class="btn btn-secondary">Ask Instructor</button>
+                            </div>
+                        </div>
+
+                        <!-- NAVIGATION -->
+                        <div style="display: flex; gap: 12px; margin-top: 24px;">
+                            <button class="btn btn-secondary btn-small">← Previous Lesson</button>
+                            <button class="btn btn-primary btn-small">Next Lesson →</button>
+                        </div>
+                    </div>
+
+                    <!-- SIDEBAR: LESSON LIST -->
+                    <div class="sidebar-lessons">
+                        <h4>Lesson List</h4>
+                        <div class="lesson-list-item active">
+                            <div class="lesson-number">✓</div>
+                            <div>
+                                <div class="lesson-title-text">Intro to Hooks</div>
+                                <div class="lesson-duration-text">32 min</div>
+                            </div>
+                        </div>
+                        <div class="lesson-list-item active">
+                            <div class="lesson-number">✓</div>
+                            <div>
+                                <div class="lesson-title-text">useState Hook</div>
+                                <div class="lesson-duration-text">28 min</div>
+                            </div>
+                        </div>
+                        <div class="lesson-list-item active">
+                            <div class="lesson-number">✓</div>
+                            <div>
+                                <div class="lesson-title-text">useEffect Hook</div>
+                                <div class="lesson-duration-text">45 min</div>
+                            </div>
+                        </div>
+                        <div class="lesson-list-item active">
+                            <div class="lesson-number">✓</div>
+                            <div>
+                                <div class="lesson-title-text">useContext Hook</div>
+                                <div class="lesson-duration-text">35 min</div>
+                            </div>
+                        </div>
+                        <div class="lesson-list-item active">
+                            <div class="lesson-number">5</div>
+                            <div>
+                                <div class="lesson-title-text">Custom Hooks</div>
+                                <div class="lesson-duration-text">42 min</div>
+                            </div>
+                        </div>
+                        <div class="lesson-list-item">
+                            <div class="lesson-number">6</div>
+                            <div>
+                                <div class="lesson-title-text">useReducer Hook</div>
+                                <div class="lesson-duration-text">38 min</div>
+                            </div>
+                        </div>
+                        <div class="lesson-list-item">
+                            <div class="lesson-number">7</div>
+                            <div>
+                                <div class="lesson-title-text">Performance Hooks</div>
+                                <div class="lesson-duration-text">40 min</div>
+                            </div>
+                        </div>
+                        <div class="lesson-list-item">
+                            <div class="lesson-number">📝</div>
+                            <div>
+                                <div class="lesson-title-text">Module Quiz</div>
+                                <div class="lesson-duration-text">15 min</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

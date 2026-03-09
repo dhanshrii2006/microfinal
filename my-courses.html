@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses - Acadify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li onclick="navigateTo('index.html')">Dashboard</li>
+                <li class="active" onclick="navigateTo('my-courses.html')">My Courses</li>
+                <li onclick="navigateTo('browse-courses.html')">Browse Courses</li>
+                <li onclick="navigateTo('lesson.html')">Lessons</li>
+                <li onclick="navigateTo('quiz.html')">Quizzes</li>
+                <li onclick="navigateTo('assignment.html')">Assignments</li>
+                <li onclick="navigateTo('progress.html')">Progress</li>
+                <li onclick="navigateTo('calendar.html')">Calendar</li>
+                <li onclick="navigateTo('setting.html')">Settings</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search your courses...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar">JD</div>
+                        <span>Johen Davis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+                <div class="welcome">
+                    <h2>My Courses 📖</h2>
+                    <p>Continue learning and master new skills</p>
+                </div>
+
+                <!-- FILTER & SORT -->
+                <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                    <button class="btn btn-primary">All Courses</button>
+                    <button class="btn btn-secondary">In Progress</button>
+                    <button class="btn btn-secondary">Completed</button>
+                    <button class="btn btn-secondary">Paused</button>
+                </div>
+
+                <!-- COURSES GRID -->
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-card-header">React Advanced</div>
+                        <div class="course-card-body">
+                            <h3>React Advanced</h3>
+                            <p>by Sarah Johnson</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                                <div class="progress-text">65% Complete • 25/45 lessons</div>
+                            </div>
+                            <button class="btn btn-primary btn-small btn-block">Continue Course</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-card-header">Python Basics</div>
+                        <div class="course-card-body">
+                            <h3>Python Basics</h3>
+                            <p>by Mike Chen</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 100%"></div>
+                                </div>
+                                <div class="progress-text">100% Complete • Certificate earned ✓</div>
+                            </div>
+                            <button class="btn btn-secondary btn-small btn-block">View Certificate</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-card-header">Web Design</div>
+                        <div class="course-card-body">
+                            <h3>Web Design Fundamentals</h3>
+                            <p>by Emma Wilson</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 42%"></div>
+                                </div>
+                                <div class="progress-text">42% Complete • 15/36 lessons</div>
+                            </div>
+                            <button class="btn btn-primary btn-small btn-block">Continue Course</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-card-header">Node.js API</div>
+                        <div class="course-card-body">
+                            <h3>Node.js API Development</h3>
+                            <p>by Alex Rodriguez</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 28%"></div>
+                                </div>
+                                <div class="progress-text">28% Complete • 8/28 lessons</div>
+                            </div>
+                            <button class="btn btn-primary btn-small btn-block">Continue Course</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-card-header">Data Science</div>
+                        <div class="course-card-body">
+                            <h3>Data Science with Python</h3>
+                            <p>by Lisa Zhang</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 15%"></div>
+                                </div>
+                                <div class="progress-text">15% Complete • 5/32 lessons</div>
+                            </div>
+                            <button class="btn btn-primary btn-small btn-block">Continue Course</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-card-header">Mobile Dev</div>
+                        <div class="course-card-body">
+                            <h3>React Native Mobile</h3>
+                            <p>by James Park</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 0%"></div>
+                                </div>
+                                <div class="progress-text">Not Started</div>
+                            </div>
+                            <button class="btn btn-primary btn-small btn-block">Start Course</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

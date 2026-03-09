@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>Calendar</title>
+</head>
+<body>
+PLACEHOLDER
+</body>
+</html>
+
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+}
+
+header{
+    background:#44058b;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+
+.container{
+    padding:30px;
+}
+
+#calendar{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0px 4px 10px rgba(0,0,0,0.1);
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Course Calendar</h2>
+</header>
+
+<div class="container">
+<div id="calendar"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  var calendarEl = document.getElementById('calendar');
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+
+    initialView: 'dayGridMonth',
+
+    selectable: true,
+
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+
+    dateClick: function(info) {
+
+      let eventTitle = prompt("Enter Event Name");
+
+      if(eventTitle){
+        calendar.addEvent({
+          title: eventTitle,
+          start: info.dateStr
+        });
+      }
+
+    },
+
+    events: [
+      {
+        title: "Web Development Class",
+        start: "2026-03-10"
+      },
+      {
+        title: "Python Assignment",
+        start: "2026-03-12"
+      },
+      {
+        title: "Machine Learning Lecture",
+        start: "2026-03-15"
+      },
+      {
+        title: "Data Science Exam",
+        start: "2026-03-20"
+      }
+    ]
+
+  });
+
+  calendar.render();
+
+});
+
+</script>
+
+</body>
+</html>
+

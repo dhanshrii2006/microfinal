@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Acadify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li class="active" onclick="navigateTo('index.html')">Dashboard</li>
+                <li onclick="navigateTo('my-courses.html')">My Courses</li>
+                <li onclick="navigateTo('browse-courses.html')">Browse Courses</li>
+                <li onclick="navigateTo('lesson.html')">Lessons</li>
+                <li onclick="navigateTo('quiz.html')">Quizzes</li>
+                <li onclick="navigateTo('assignment.html')">Assignments</li>
+                <li onclick="navigateTo('progress.html')">Progress</li>
+                <li onclick="navigateTo('calendar.html')">Calendar</li>
+                <li onclick="navigateTo('setting.html')">Settings</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search courses, lessons, assignments...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar">JD</div>
+                        <span>Johen Davis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+                <!-- WELCOME SECTION -->
+                <div class="welcome">
+                    <h2>Hello Johen, Welcome Back! 👋</h2>
+                    <p>You've earned 3 new achievements this week. Keep up the great work!</p>
+                </div>
+
+                <!-- STATS CARDS -->
+                <div class="cards-grid">
+                    <div class="card">
+                        <h4>Courses in Progress</h4>
+                        <div class="card-number">4</div>
+                        <div class="card-footer">↑ 1 this month</div>
+                    </div>
+                    <div class="card">
+                        <h4>Courses Completed</h4>
+                        <div class="card-number">12</div>
+                        <div class="card-footer">↑ 2 this month</div>
+                    </div>
+                    <div class="card">
+                        <h4>Assignments Due</h4>
+                        <div class="card-number">5</div>
+                        <div class="card-footer">In next 7 days</div>
+                    </div>
+                </div>
+
+                <!-- CHARTS -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h4>Learning Hours This Week</h4>
+                        <canvas id="hoursChart" height="200"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4>Course Completion Rate</h4>
+                        <canvas id="courseChart" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- SECTION: YOUR COURSES -->
+                <h3 class="section-title">Your Courses</h3>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-card-header">React Advanced</div>
+                        <div class="course-card-body">
+                            <h3>React Advanced</h3>
+                            <p>by Sarah Johnson</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                                <div class="progress-text">65% Complete</div>
+                            </div>
+                            <button class="btn btn-primary btn-small btn-block">Continue Course</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-card-header">Python Basics</div>
+                        <div class="course-card-body">
+                            <h3>Python Basics</h3>
+                            <p>by Mike Chen</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 100%"></div>
+                                </div>
+                                <div class="progress-text">100% Complete</div>
+                            </div>
+                            <button class="btn btn-secondary btn-small btn-block">View Certificate</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-card-header">Web Design</div>
+                        <div class="course-card-body">
+                            <h3>Web Design Fundamentals</h3>
+                            <p>by Emma Wilson</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 42%"></div>
+                                </div>
+                                <div class="progress-text">42% Complete</div>
+                            </div>
+                            <button class="btn btn-primary btn-small btn-block">Continue Course</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-card-header">Node.js API</div>
+                        <div class="course-card-body">
+                            <h3>Node.js API Development</h3>
+                            <p>by Alex Rodriguez</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 28%"></div>
+                                </div>
+                                <div class="progress-text">28% Complete</div>
+                            </div>
+                            <button class="btn btn-primary btn-small btn-block">Continue Course</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION: UPCOMING LESSONS & ACTIVITY -->
+                <div class="two-column" style="margin-top: 40px;">
+                    <!-- UPCOMING LESSONS -->
+                    <div>
+                        <h3 class="section-title">Upcoming Lessons</h3>
+                        <div class="lessons-grid">
+                            <div class="lesson-item">
+                                <span class="lesson-name">React Hooks Deep Dive</span>
+                                <span class="lesson-duration">45 min</span>
+                            </div>
+                            <div class="lesson-item">
+                                <span class="lesson-name">API Authentication Security</span>
+                                <span class="lesson-duration">60 min</span>
+                            </div>
+                            <div class="lesson-item">
+                                <span class="lesson-name">Database Optimization</span>
+                                <span class="lesson-duration">50 min</span>
+                            </div>
+                            <div class="lesson-item">
+                                <span class="lesson-name">CSS Grid Mastery</span>
+                                <span class="lesson-duration">40 min</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RECENT ACTIVITY -->
+                    <div>
+                        <h3 class="section-title">Recent Activity</h3>
+                        <div class="activity-feed">
+                            <div class="activity-item">
+                                <div class="activity-icon completed">✓</div>
+                                <div class="activity-content">
+                                    <h4>Completed Quiz</h4>
+                                    <p>JavaScript ES6 Features - 92%</p>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon submitted">📤</div>
+                                <div class="activity-content">
+                                    <h4>Submitted Assignment</h4>
+                                    <p>React Component Project</p>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon enrolled">📚</div>
+                                <div class="activity-content">
+                                    <h4>Enrolled in Course</h4>
+                                    <p>Advanced Node.js</p>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon completed">✓</div>
+                                <div class="activity-content">
+                                    <h4>Completed Lesson</h4>
+                                    <p>Introduction to APIs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
