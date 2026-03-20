@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:30px;
+}
+
+h2{
+    margin-bottom:20px;
+}
+
+/* Top Section */
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:25px;
+}
+
+.search-box input{
+    padding:10px 15px;
+    width:250px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+.upload-btn{
+    background:#44058b;
+    color:white;
+    padding:10px 18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.upload-btn:hover{
+    background:#44058b;
+}
+
+/* Upload Modal */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    background:white;
+    padding:25px;
+    width:400px;
+    border-radius:12px;
+}
+
+.modal-content input, .modal-content textarea{
+    width:100%;
+    margin-bottom:15px;
+    padding:8px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+.modal-content button{
+    background:#44058b;
+    color:white;
+    padding:8px 12px;
+    border:none;
+    border-radius:6px;
+}
+
+/* Course Grid */
+.course-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+/* Course Card */
+.course-card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.05);
+}
+
+.course-card video{
+    width:100%;
+    border-radius:8px;
+    margin-bottom:10px;
+}
+
+.badge{
+    padding:4px 10px;
+    font-size:12px;
+    border-radius:6px;
+}
+
+.enrolled{
+    background:#44058b;
+    color:white;
+}
+
+.not-enrolled{
+    background: #ab96e4;
+    color:white;
+    border-color:#44058b; 
+}
+</style>
+</head>
+
+<body>
+
+<h2>Courses</h2>
+
+<div class="top-bar">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search courses...">
+    </div>
+    <button class="upload-btn" onclick="openModal()">Upload Course</button>
+</div>
+
+<div class="course-grid" id="courseContainer"></div>
+
+<!-- Upload Modal -->
+<div class="modal" id="uploadModal">
+    <div class="modal-content">
+        <h3>Upload New Course</h3>
+        <input type="text" id="courseTitle" placeholder="Course Title">
+        <textarea id="courseDesc" placeholder="Course Description"></textarea>
+        <input type="file" id="videoFile" accept="video/*">
+        <button onclick="addCourse()">Add Course</button>
+        <button onclick="closeModal()" style="background:#ccc; color:black; margin-top:10px;">Cancel</button>
+    </div>
+</div>
+
+<script>
+let courses = [
+    {title:"IT & Software", enrolled:true, video:""},
+    {title:"Programming", enrolled:true, video:""},
+    {title:"Networking", enrolled:false, video:""},
+    {title:"Network Security", enrolled:false, video:""}
+];
+
+const container = document.getElementById("courseContainer");
+
+function renderCourses(list){
+    container.innerHTML="";
+    list.forEach(course=>{
+        const card=document.createElement("div");
+        card.className="course-card";
+        card.innerHTML=`
+            ${course.video ? `<video controls src="${course.video}"></video>` : ""}
+            <h4>${course.title}</h4>
+            <span class="badge ${course.enrolled ? 'enrolled':'not-enrolled'}">
+                ${course.enrolled ? 'Enrolled':'Not Enrolled'}
+            </span>
+            <br><br>
+            <button onclick="toggleEnroll('${course.title}')">
+                ${course.enrolled ? 'Unenroll':'Enroll'}
+            </button>
+        `;
+        container.appendChild(card);
+    });
+}
+
+renderCourses(courses);
+
+/* Search Function */
+document.getElementById("searchInput").addEventListener("keyup", function(){
+    const value=this.value.toLowerCase();
+    const filtered=courses.filter(c=>c.title.toLowerCase().includes(value));
+    renderCourses(filtered);
+});
+
+/* Enroll Toggle */
+function toggleEnroll(title){
+    courses=courses.map(c=>{
+        if(c.title===title){
+            c.enrolled=!c.enrolled;
+        }
+        return c;
+    });
+    renderCourses(courses);
+}
+
+/* Modal */
+function openModal(){
+    document.getElementById("uploadModal").style.display="flex";
+}
+
+function closeModal(){
+    document.getElementById("uploadModal").style.display="none";
+}
+
+/* Add Course */
+function addCourse(){
+    const title=document.getElementById("courseTitle").value;
+    const videoFile=document.getElementById("videoFile").files[0];
+
+    let videoURL="";
+    if(videoFile){
+        videoURL=URL.createObjectURL(videoFile);
+    }
+
+    courses.push({
+        title:title,
+        enrolled:false,
+        video:videoURL
+    });
+
+    renderCourses(courses);
+    closeModal();
+}
+
+</script>
+
+</body>
+</html>
+

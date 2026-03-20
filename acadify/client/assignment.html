@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments - Acadify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li onclick="navigateTo('dashboard.html')">Dashboard</li>
+                <li onclick="navigateTo('my-courses.html')">My Courses</li>
+                <li onclick="navigateTo('browse-courses.html')">Browse Courses</li>
+                <li onclick="navigateTo('lesson.html')">Lessons</li>
+                <li onclick="navigateTo('quiz.html')">Quizzes</li>
+                <li class="active" onclick="navigateTo('assignment.html')">Assignments</li>
+                <li onclick="navigateTo('progress.html')">Progress</li>
+                <li onclick="navigateTo('setting.html')">Settings</li>
+            </ul>
+        </div>
+
+        <div class="main">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search assignments...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar" id="profileAvatar">U</div>
+                        <span id="currentUser">User</span>
+                        <button id="logoutBtn" class="btn-logout">Logout</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-container">
+                <h2>✅ Assignments</h2>
+                <p style="margin-bottom: 20px; color: #666;">Submit and track your assignments</p>
+                <div id="assignmentContent">
+                    <p style="text-align: center; color: #999;">Loading assignments...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .btn-logout { margin-left: 10px; padding: 6px 12px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
+    </style>
+
+    <script type="module">
+        import { authAPI, clearUser, redirectToLogin } from './api.js';
+        window.navigateTo = (p) => window.location.href = p;
+        window.toggleSidebar = () => document.querySelector('.sidebar').classList.toggle('collapsed');
+        
+        async function initPage() {
+            try {
+                const user = await authAPI.getCurrentUser();
+                if (!user?.id) redirectToLogin();
+                document.getElementById('currentUser').textContent = user.name || user.email.split('@')[0];
+                document.getElementById('profileAvatar').textContent = (user.name || user.email).charAt(0).toUpperCase();
+                loadAssignments();
+            } catch (e) { redirectToLogin(); }
+        }
+        
+        function loadAssignments() {
+            document.getElementById('assignmentContent').innerHTML = '<p style="text-align: center; color: #999;">No assignments yet. Check back later!</p>';
+        }
+        
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try { await authAPI.logout(); } catch (e) {}
+            clearUser();
+            redirectToLogin();
+        });
+        
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>

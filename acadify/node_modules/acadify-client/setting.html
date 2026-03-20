@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Acadify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li onclick="navigateTo('dashboard.html')">Dashboard</li>
+                <li onclick="navigateTo('my-courses.html')">My Courses</li>
+                <li onclick="navigateTo('browse-courses.html')">Browse Courses</li>
+                <li onclick="navigateTo('lesson.html')">Lessons</li>
+                <li onclick="navigateTo('quiz.html')">Quizzes</li>
+                <li onclick="navigateTo('assignment.html')">Assignments</li>
+                <li onclick="navigateTo('progress.html')">Progress</li>
+                <li class="active" onclick="navigateTo('setting.html')">Settings</li>
+            </ul>
+        </div>
+
+        <div class="main">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <h3 style="margin-left: 20px;">Settings</h3>
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar" id="profileAvatar">U</div>
+                        <span id="currentUser">User</span>
+                        <button id="logoutBtn" class="btn-logout">Logout</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-container">
+                <div style="max-width: 600px;">
+                    <h2>⚙️ Account Settings</h2>
+                    <p style="margin-bottom: 20px; color: #666;">Manage your profile and preferences</p>
+
+                    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">Full Name</label>
+                            <input type="text" id="fullName" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Your full name">
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">Email</label>
+                            <input type="email" id="email" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" placeholder="your@email.com" disabled>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">Theme</label>
+                            <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <option>Light</option>
+                                <option>Dark</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">Notifications</label>
+                            <label style="display: flex; align-items: center; margin-bottom: 10px;">
+                                <input type="checkbox" checked> Email notifications
+                            </label>
+                            <label style="display: flex; align-items: center;">
+                                <input type="checkbox" checked> Course updates
+                            </label>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="alert('Settings saved!')">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .btn-logout { margin-left: 10px; padding: 6px 12px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
+    </style>
+
+    <script type="module">
+        import { authAPI, clearUser, redirectToLogin } from './api.js';
+        window.navigateTo = (p) => window.location.href = p;
+        window.toggleSidebar = () => document.querySelector('.sidebar').classList.toggle('collapsed');
+        
+        async function initPage() {
+            try {
+                const user = await authAPI.getCurrentUser();
+                if (!user?.id) redirectToLogin();
+                document.getElementById('currentUser').textContent = user.name || user.email.split('@')[0];
+                document.getElementById('profileAvatar').textContent = (user.name || user.email).charAt(0).toUpperCase();
+                document.getElementById('fullName').value = user.name || '';
+                document.getElementById('email').value = user.email || '';
+            } catch (e) { redirectToLogin(); }
+        }
+        
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try { await authAPI.logout(); } catch (e) {}
+            clearUser();
+            redirectToLogin();
+        });
+        
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
+
+

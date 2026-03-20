@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Acadify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li class="active" onclick="navigateTo('dashboard.html')">Dashboard</li>
+                <li onclick="navigateTo('my-courses.html')">My Courses</li>
+                <li onclick="navigateTo('browse-courses.html')">Browse Courses</li>
+                <li onclick="navigateTo('lesson.html')">Lessons</li>
+                <li onclick="navigateTo('quiz.html')">Quizzes</li>
+                <li onclick="navigateTo('assignment.html')">Assignments</li>
+                <li onclick="navigateTo('progress.html')">Progress</li>
+                <li onclick="navigateTo('calendar.html')">Calendar</li>
+                <li onclick="navigateTo('setting.html')">Settings</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search courses, lessons, assignments...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar" id="profileAvatar">U</div>
+                        <span id="currentUser">User</span>
+                        <button id="logoutBtn" class="btn-logout">Logout</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+                <!-- WELCOME SECTION -->
+                <div class="welcome">
+                    <h2 id="welcomeMessage">Hello, Welcome Back! 👋</h2>
+                    <p id="welcomeSubtitle">You're making great progress with your courses!</p>
+                </div>
+
+                <!-- STATS CARDS -->
+                <div class="cards-grid">
+                    <div class="card">
+                        <h4>Courses in Progress</h4>
+                        <div class="card-number" id="coursesInProgress">0</div>
+                        <div class="card-footer">↑ This month</div>
+                    </div>
+                    <div class="card">
+                        <h4>Courses Completed</h4>
+                        <div class="card-number" id="coursesCompleted">0</div>
+                        <div class="card-footer">↑ Achievements</div>
+                    </div>
+                    <div class="card">
+                        <h4>Learning Streak</h4>
+                        <div class="card-number" id="learningStreak">0</div>
+                        <div class="card-footer">Days in a row</div>
+                    </div>
+                </div>
+
+                <!-- CHARTS -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h4>Learning Hours This Week</h4>
+                        <canvas id="hoursChart" height="200"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4>Course Completion Rate</h4>
+                        <canvas id="courseChart" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- SECTION: YOUR COURSES -->
+                <h3 class="section-title">Your Courses</h3>
+                <div class="courses-grid" id="coursesGrid">
+                    <p style="grid-column: 1/-1; text-align: center; color: #999;">Loading your courses...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .btn-logout {
+            margin-left: 10px;
+            padding: 6px 12px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: #c0392b;
+        }
+    </style>
+
+    <script type="module">
+        import { authAPI, clearUser, redirectToLogin, coursesAPI } from './api.js';
+
+        // Navigation
+        window.navigateTo = function(page) {
+            window.location.href = page;
+        };
+
+        // Toggle sidebar
+        window.toggleSidebar = function() {
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('collapsed');
+            }
+        };
+
+        // Initialize dashboard
+        async function initDashboard() {
+            try {
+                const user = await authAPI.getCurrentUser();
+                if (!user || !user.id) {
+                    redirectToLogin();
+                    return;
+                }
+
+                // Update user display
+                updateUserDisplay(user);
+                
+                // Load courses
+                await loadCourses();
+                
+                // Initialize charts
+                initCharts();
+
+            } catch (error) {
+                console.error('Dashboard init error:', error);
+                redirectToLogin();
+            }
+        }
+
+        function updateUserDisplay(user) {
+            const nameDisplay = document.getElementById('currentUser');
+            const avatarDisplay = document.getElementById('profileAvatar');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+
+            if (nameDisplay) nameDisplay.textContent = user.name || user.email.split('@')[0];
+            if (avatarDisplay) avatarDisplay.textContent = (user.name || user.email).charAt(0).toUpperCase();
+            if (welcomeMessage) welcomeMessage.textContent = `Hello ${user.name || 'there'}, Welcome Back! 👋`;
+
+            // Role-based customization
+            if (user.role === 'teacher') {
+                welcomeMessage.textContent = `Welcome back, ${user.name || 'Instructor'}! 👨‍🏫`;
+            }
+        }
+
+        async function loadCourses() {
+            const coursesGrid = document.getElementById('coursesGrid');
+            try {
+                const courses = await coursesAPI.getCourses();
+                
+                if (!courses || courses.length === 0) {
+                    coursesGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">No courses yet. <a href="browse-courses.html">Browse available courses</a></p>';
+                    return;
+                }
+
+                coursesGrid.innerHTML = courses.map(course => `
+                    <div class="course-card">
+                        <div class="course-card-header">${course.title || 'Untitled Course'}</div>
+                        <div class="course-card-body">
+                            <h3>${course.title || 'Untitled'}</h3>
+                            <p>by ${course.instructor_name || 'Unknown'}</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${course.progress || 0}%"></div>
+                                </div>
+                                <div class="progress-text">${course.progress || 0}% Complete</div>
+                            </div>
+                            <button class="btn btn-primary btn-small btn-block" onclick="navigateTo('lesson.html?id=${course.id}')">Continue Course</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading courses:', error);
+                coursesGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Unable to load courses. Please try again later.</p>';
+            }
+        }
+
+        function initCharts() {
+            // Hours Chart
+            new Chart(document.getElementById('hoursChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Hours',
+                        data: [8, 9, 2, 4, 7, 1, 6],
+                        backgroundColor: '#2b4eff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Course Completion Chart
+            new Chart(document.getElementById('courseChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['In Progress', 'Completed', 'Not Started'],
+                    datasets: [{
+                        data: [10, 6, 3],
+                        backgroundColor: ['#2b4eff', '#1b8f5a', '#d9822b']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Setup logout button
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                await authAPI.logout();
+                clearUser();
+                redirectToLogin();
+            } catch (error) {
+                console.error('Logout error:', error);
+                clearUser();
+                redirectToLogin();
+            }
+        });
+
+        // Load dashboard on page load
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>
