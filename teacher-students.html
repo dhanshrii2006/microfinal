@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students - Acadify Teacher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li onclick="navigateTo('teacher-dashboard.html')">Dashboard</li>
+                <li onclick="navigateTo('teacher-courses.html')">My Courses</li>
+                <li onclick="navigateTo('teacher-assignments.html')">Assignments</li>
+                <li class="active" onclick="navigateTo('teacher-students.html')">Students</li>
+                <li onclick="navigateTo('teacher-grades.html')">Grades</li>
+                <li onclick="navigateTo('teacher-analytics.html')">Analytics</li>
+                <li onclick="navigateTo('teacher-messages.html')">Messages</li>
+                <li onclick="navigateTo('teacher-settings.html')">Settings</li>
+                <li onclick="logout()">Logout</li>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search students...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar" id="profileInitials">PS</div>
+                        <span id="profileName">Prof. Sarah</span>
+                    </div>
+                </div>
+            </div>
+            <div class="page-container">
+                <div class="welcome">
+                    <h2>Students</h2>
+                    <p>View and manage your enrolled students</p>
+                </div>
+                <div style="padding: 40px; text-align: center; background: #f5f7fa; border-radius: 12px; margin-top: 20px;">
+                    <h3 style="color: #666; margin-bottom: 10px;">🚀 Coming Soon</h3>
+                    <p style="color: #999;">Student management interface is under development.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+    <script src="dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth('teacher');
+            const userName = localStorage.getItem('userName') || 'Prof. Sarah';
+            const userInitials = localStorage.getItem('userInitials') || 'PS';
+            document.getElementById('profileName').textContent = userName;
+            document.getElementById('profileInitials').textContent = userInitials;
+        });
+    </script>
+</body>
+</html>

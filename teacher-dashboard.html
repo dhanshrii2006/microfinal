@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Acadify Teacher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li class="active" onclick="navigateTo('teacher-dashboard.html')">Dashboard</li>
+                <li onclick="navigateTo('teacher-courses.html')">My Courses</li>
+                <li onclick="navigateTo('teacher-assignments.html')">Assignments</li>
+                <li onclick="navigateTo('teacher-students.html')">Students</li>
+                <li onclick="navigateTo('teacher-grades.html')">Grades</li>
+                <li onclick="navigateTo('teacher-analytics.html')">Analytics</li>
+                <li onclick="navigateTo('teacher-messages.html')">Messages</li>
+                <li onclick="navigateTo('teacher-settings.html')">Settings</li>
+                <li onclick="logout()">Logout</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search courses, students, assignments...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar" id="profileInitials">PS</div>
+                        <span id="profileName">Prof. Sarah</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+                <!-- WELCOME SECTION -->
+                <div class="welcome">
+                    <h2>Welcome Back, <span id="welcomeName">Prof. Sarah</span>! 👋</h2>
+                    <p>You have 5 pending assignments to grade and 3 student messages.</p>
+                </div>
+
+                <!-- STATS CARDS -->
+                <div class="cards-grid">
+                    <div class="card">
+                        <h4>Active Courses</h4>
+                        <div class="card-number">6</div>
+                        <div class="card-footer">↑ 1 this semester</div>
+                    </div>
+                    <div class="card">
+                        <h4>Total Students</h4>
+                        <div class="card-number">124</div>
+                        <div class="card-footer">Across all courses</div>
+                    </div>
+                    <div class="card">
+                        <h4>Pending Assignments</h4>
+                        <div class="card-number">5</div>
+                        <div class="card-footer">To be graded</div>
+                    </div>
+                </div>
+
+                <!-- CHARTS -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h4>Student Enrollment This Semester</h4>
+                        <canvas id="enrollmentChart" height="200"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4>Course Performance</h4>
+                        <canvas id="performanceChart" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- RECENT ACTIVITY -->
+                <div class="activity-section">
+                    <h4>Pending Assignments</h4>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">📝</div>
+                            <div class="activity-content">
+                                <p><strong>React Hooks Assignment</strong> - 5 submissions to grade</p>
+                                <small>Due: Today</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📝</div>
+                            <div class="activity-content">
+                                <p><strong>Database Design Project</strong> - 3 submissions to grade</p>
+                                <small>Due: Tomorrow</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📝</div>
+                            <div class="activity-content">
+                                <p><strong>JavaScript Quiz Review</strong> - 2 submissions pending review</p>
+                                <small>Due: In 2 days</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="dashboard.js"></script>
+    <script>
+        // Initialize teacher dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth('teacher');
+            loadTeacherProfile();
+            initTeacherCharts();
+        });
+
+        function loadTeacherProfile() {
+            const userName = localStorage.getItem('userName') || 'Prof. Sarah';
+            const userInitials = localStorage.getItem('userInitials') || 'PS';
+            
+            document.getElementById('welcomeName').textContent = userName;
+            document.getElementById('profileName').textContent = userName;
+            document.getElementById('profileInitials').textContent = userInitials;
+        }
+
+        function initTeacherCharts() {
+            // Enrollment Chart
+            const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+            new Chart(enrollmentCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Web Dev', 'Data Science', 'Mobile Dev', 'AI/ML', 'Cloud Arch', 'DevOps'],
+                    datasets: [{
+                        label: 'Student Count',
+                        data: [28, 22, 18, 25, 20, 11],
+                        backgroundColor: [
+                            'rgba(102, 126, 234, 0.7)',
+                            'rgba(88, 214, 141, 0.7)',
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(229, 57, 53, 0.7)',
+                            'rgba(156, 39, 176, 0.7)',
+                            'rgba(0, 188, 212, 0.7)',
+                        ],
+                        borderColor: [
+                            'rgb(102, 126, 234)',
+                            'rgb(88, 214, 141)',
+                            'rgb(255, 193, 7)',
+                            'rgb(229, 57, 53)',
+                            'rgb(156, 39, 176)',
+                            'rgb(0, 188, 212)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Performance Chart
+            const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(performanceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Excellent (A)', 'Good (B)', 'Fair (C)', 'Needs Improvement'],
+                    datasets: [{
+                        data: [32, 45, 16, 7],
+                        backgroundColor: [
+                            'rgba(88, 214, 141, 0.8)',
+                            'rgba(102, 126, 234, 0.8)',
+                            'rgba(255, 193, 7, 0.8)',
+                            'rgba(229, 57, 53, 0.8)',
+                        ],
+                        borderColor: ['rgb(88, 214, 141)', 'rgb(102, 126, 234)', 'rgb(255, 193, 7)', 'rgb(229, 57, 53)'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acadify - Role Selection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            margin-bottom: 60px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .role-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .role-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .role-card h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .role-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .role-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .role-button:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        .role-button:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+
+        .role-button:active {
+            transform: scale(0.98);
+        }
+
+        .role-card:nth-child(2) {
+            border-top: 4px solid #667eea;
+        }
+
+        .role-card:nth-child(1) {
+            border-top: 4px solid #58d68d;
+        }
+
+        .role-card:nth-child(3) {
+            border-top: 4px solid #ff6b6b;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .roles-grid {
+                gap: 20px;
+            }
+
+            .role-card {
+                padding: 30px;
+            }
+
+            .role-icon {
+                font-size: 48px;
+            }
+
+            .role-card h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                margin-bottom: 40px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .roles-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .role-card {
+                padding: 20px;
+            }
+
+            .role-icon {
+                font-size: 40px;
+                margin-bottom: 15px;
+            }
+
+            .role-card h2 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .role-card p {
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+            .role-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Acadify</h1>
+            <p>Select your role to continue</p>
+        </div>
+
+        <div class="roles-grid">
+            <!-- Student Card -->
+            <div class="role-card" onclick="selectRole('student')">
+                <div class="role-icon">👨‍🎓</div>
+                <h2>Student</h2>
+                <p>Track your courses, assignments, and learning progress with personalized analytics.</p>
+                <button class="role-button">Enter as Student</button>
+            </div>
+
+            <!-- Teacher Card -->
+            <div class="role-card" onclick="selectRole('teacher')">
+                <div class="role-icon">👨‍🏫</div>
+                <h2>Teacher</h2>
+                <p>Manage courses, create assignments, and monitor student progress effectively.</p>
+                <button class="role-button">Enter as Teacher</button>
+            </div>
+
+            <!-- Admin Card -->
+            <div class="role-card" onclick="selectRole('admin')">
+                <div class="role-icon">👨‍💼</div>
+                <h2>Admin</h2>
+                <p>Oversee the platform, manage users, and access comprehensive system analytics.</p>
+                <button class="role-button">Enter as Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectRole(role) {
+            // Store role and user info in localStorage
+            localStorage.setItem('userRole', role);
+            
+            // Set different user names based on role
+            if (role === 'student') {
+                localStorage.setItem('userName', 'Johen Davis');
+                localStorage.setItem('userInitials', 'JD');
+                window.location.href = 'index.html';
+            } else if (role === 'teacher') {
+                localStorage.setItem('userName', 'Prof. Sarah');
+                localStorage.setItem('userInitials', 'PS');
+                window.location.href = 'teacher-dashboard.html';
+            } else if (role === 'admin') {
+                localStorage.setItem('userName', 'Admin');
+                localStorage.setItem('userInitials', 'AD');
+                window.location.href = 'admin-dashboard.html';
+            }
+        }
+
+        // Check if user is already logged in
+        window.addEventListener('load', () => {
+            const userRole = localStorage.getItem('userRole');
+            if (userRole) {
+                if (userRole === 'student') {
+                    window.location.href = 'index.html';
+                } else if (userRole === 'teacher') {
+                    window.location.href = 'teacher-dashboard.html';
+                } else if (userRole === 'admin') {
+                    window.location.href = 'admin-dashboard.html';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

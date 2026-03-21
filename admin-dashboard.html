@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Acadify Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h2>📚 Acadify</h2>
+            <ul>
+                <li class="active" onclick="navigateTo('admin-dashboard.html')">Dashboard</li>
+                <li onclick="navigateTo('admin-users.html')">Users Management</li>
+                <li onclick="navigateTo('admin-courses.html')">Courses</li>
+                <li onclick="navigateTo('admin-teachers.html')">Teachers</li>
+                <li onclick="navigateTo('admin-students.html')">Students</li>
+                <li onclick="navigateTo('admin-analytics.html')">Analytics</li>
+                <li onclick="navigateTo('admin-reports.html')">Reports</li>
+                <li onclick="navigateTo('admin-settings.html')">Settings</li>
+                <li onclick="logout()">Logout</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <input type="text" class="search-box" placeholder="Search users, courses, analytics...">
+                </div>
+                <div class="topbar-right">
+                    <div class="profile">
+                        <div class="profile-avatar" id="profileInitials">AD</div>
+                        <span id="profileName">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+                <!-- WELCOME SECTION -->
+                <div class="welcome">
+                    <h2>System Overview, <span id="welcomeName">Admin</span>! 📊</h2>
+                    <p>Manage platform users, courses, and monitor system health.</p>
+                </div>
+
+                <!-- STATS CARDS -->
+                <div class="cards-grid">
+                    <div class="card">
+                        <h4>Total Users</h4>
+                        <div class="card-number">1,240</div>
+                        <div class="card-footer">↑ 45 this month</div>
+                    </div>
+                    <div class="card">
+                        <h4>Active Courses</h4>
+                        <div class="card-number">42</div>
+                        <div class="card-footer">↑ 5 this month</div>
+                    </div>
+                    <div class="card">
+                        <h4>System Health</h4>
+                        <div class="card-number">99.8%</div>
+                        <div class="card-footer">Uptime</div>
+                    </div>
+                </div>
+
+                <!-- CHARTS -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h4>User Growth</h4>
+                        <canvas id="userGrowthChart" height="200"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4>User Distribution</h4>
+                        <canvas id="userDistributionChart" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- PLATFORM STATS -->
+                <div class="activity-section">
+                    <h4>Platform Statistics</h4>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">👥</div>
+                            <div class="activity-content">
+                                <p><strong>Students</strong> - 850 active users</p>
+                                <small>Last login: Today</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">👨‍🏫</div>
+                            <div class="activity-content">
+                                <p><strong>Teachers</strong> - 95 active instructors</p>
+                                <small>Last login: Today</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📚</div>
+                            <div class="activity-content">
+                                <p><strong>Courses</strong> - 42 active courses running</p>
+                                <small>Total enrollments: 3,240</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="dashboard.js"></script>
+    <script>
+        // Initialize admin dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth('admin');
+            loadAdminProfile();
+            initAdminCharts();
+        });
+
+        function loadAdminProfile() {
+            const userName = localStorage.getItem('userName') || 'Admin';
+            const userInitials = localStorage.getItem('userInitials') || 'AD';
+            
+            document.getElementById('welcomeName').textContent = userName;
+            document.getElementById('profileName').textContent = userName;
+            document.getElementById('profileInitials').textContent = userInitials;
+        }
+
+        function initAdminCharts() {
+            // User Growth Chart
+            const growthCtx = document.getElementById('userGrowthChart').getContext('2d');
+            new Chart(growthCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'New Users',
+                        data: [120, 150, 180, 200, 220, 240],
+                        borderColor: 'rgb(102, 126, 234)',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Active Users',
+                        data: [800, 920, 1050, 1150, 1190, 1240],
+                        borderColor: 'rgb(88, 214, 141)',
+                        backgroundColor: 'rgba(88, 214, 141, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true, position: 'top' } },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // User Distribution Chart
+            const distributionCtx = document.getElementById('userDistributionChart').getContext('2d');
+            new Chart(distributionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Students', 'Teachers', 'Admins'],
+                    datasets: [{
+                        data: [850, 95, 5],
+                        backgroundColor: [
+                            'rgba(102, 126, 234, 0.8)',
+                            'rgba(88, 214, 141, 0.8)',
+                            'rgba(255, 193, 7, 0.8)',
+                        ],
+                        borderColor: ['rgb(102, 126, 234)', 'rgb(88, 214, 141)', 'rgb(255, 193, 7)'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
